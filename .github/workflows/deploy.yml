@@ -1,0 +1,50 @@
+name: Deploy Next.js App
+
+on:
+  push:
+    branches:
+      - main  # Define o branch que deve acionar o deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Altere para a versão do Node que você usa
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Build da aplicação
+        run: npm run build
+
+      - name: Criar arquivo tar da aplicação
+        run: tar -czf nextjs-app.tar.gz .next package.json package-lock.json
+
+      - name: Enviar arquivo para o servidor
+        uses: appleboy/scp-action@v0.1.2
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "nextjs-app.tar.gz"
+          target: "${{ secrets.REMOTE_PATH }}"
+
+      - name: Conectar ao servidor e atualizar a aplicação
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ secrets.REMOTE_PATH }}
+            tar -xzf nextjs-app.tar.gz
+            rm nextjs-app.tar.gz
+            npm install --production
+            pm2 restart app || pm2 start npm --name "app" -- start
