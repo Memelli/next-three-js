@@ -46,5 +46,6 @@ jobs:
             cd ${{ secrets.REMOTE_PATH }}
             tar -xzf nextjs-app.tar.gz
             rm nextjs-app.tar.gz
+            source ~/.nvm/nvm.sh
             npm install --production
             pm2 restart app || pm2 start npm --name "app" -- start
