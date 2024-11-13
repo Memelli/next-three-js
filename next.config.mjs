@@ -8,6 +8,11 @@ const nextConfig = {
         port: '8090',
         pathname: '/api/files/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'pocketbase.memelli.dev',
+        pathname: '/api/files/**',
+      },
     ],
   },
 }
