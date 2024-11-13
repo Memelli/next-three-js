@@ -10,7 +10,7 @@ export default function CreateCharacterPage() {
       <UI />
       <Canvas
         camera={{
-          position: [-1, 1, 5],
+          position: [-1, 1, 7],
           fov: 45,
         }}
         gl={{

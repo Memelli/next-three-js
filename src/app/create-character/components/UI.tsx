@@ -41,12 +41,12 @@ function AssetsBox() {
           </button>
         ))}
       </div>
-      <div className="flex gap-2 flex-wrap px-6">
+      <div className="flex items-center gap-8 pointer-events-auto overflow-x-auto noscrollbar px-6 pb-2">
         {currentCategory?.assets.map((asset, index) => (
           <button
             key={asset.id + 'asset' + index}
             onClick={() => changeAsset(currentCategory.name, asset)}
-            className={`w-20 h-20 rounded-xl overflow-hidden bg-gray-200 pointer-events-auto hover:opacity-100 transition-all border-2 duration-300 ${customization[currentCategory.name]?.asset?.id === asset.id ? 'border-indigo-600 opacity-100' : 'opacity-80 border-transparent'}`}
+            className={`min-w-20 min-h-20 rounded-xl overflow-hidden bg-gray-200 pointer-events-auto hover:opacity-100 transition-all border-2 duration-300 ${customization[currentCategory.name]?.asset?.id === asset.id ? 'border-indigo-600 opacity-100' : 'opacity-80 border-transparent'}`}
           >
             <Image
               className="object-cover w-full h-full"
