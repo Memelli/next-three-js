@@ -36,6 +36,17 @@ jobs:
           source: "nextjs-app.tar.gz"
           target: "${{ secrets.REMOTE_PATH }}"
 
+      - name: Conectar ao servidor e atualizar repositorio
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ secrets.REMOTE_PATH }}
+            git checkout .
+            git pull origin main
+
       - name: Conectar ao servidor e atualizar a aplicação
         uses: appleboy/ssh-action@v0.1.6
         with:
