@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import useHomeStore from '../create-character.store'
 import { pb } from '../../../utils/pocketbase'
 import Image from 'next/image'
+import { Download } from 'lucide-react'
 
 function AssetsBox() {
   const {
@@ -76,9 +77,10 @@ function DownloadButton() {
   return (
     <button
       onClick={() => download()}
-      className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer pointer-events-auto"
+      className="rounded-lg flex gap-x-3 items-center justify-center bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer pointer-events-auto"
     >
-      Download Model
+      <Download />
+      <p>Baixar modelo</p>
     </button>
   )
 }
